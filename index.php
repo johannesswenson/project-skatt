@@ -9,4 +9,5 @@
 </body>
 <footer>
   <p>Powered by Aguel and friends</p>
+  <p> hur funkar commits?</p>
 </footer>
