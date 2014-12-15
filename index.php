@@ -8,5 +8,5 @@
   <p>Some text...</p>
 </body>
 <footer>
-  <p>Powered by Aguel</p>
+  <p>Powered by Aguel and friends</p>
 </footer>
