@@ -4,10 +4,11 @@
   <title>Intro Test Screen</title>
 </head>
 <body>
-  <h2>Welcome!</h2>
-  <p>Some text...</p>
+  <h2>Heading!</h2>
+  <p>Content...</p>
 </body>
 <footer>
   <p>Powered by Aguel and friends</p>
-  <p> hur funkar commits?</p>
+  <p>hur funkar commits?</p>
+  <p>Foot</p>
 </footer>
