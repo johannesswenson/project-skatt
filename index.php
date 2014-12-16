@@ -1,3 +1,4 @@
+<?php include("db_connection.php") ?>
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -8,36 +9,31 @@
   <p>
     <?php
 
-function dbConnect () {
-  $dbconnect = mysqli_connect("typografique.se.mysql", " typografique_se", "N87FWzAL", "typografique_se")
-  if (mysqli_connect_errno()) {
-    echo "Can't connect to database" . mysqli_connect_error();
-  }
-  else {
-    $sql = "SELECT * FROM PATIENT;";
-    $result = mysqli_query($dbconnect,$sql);
+    $sql = "SELECT * FROM PATIENT ";
 
-    echo "<table cellpadding='6' border='1'>";
+	if($mysqli = connect_db()) {
+	 	
+		$result = $mysqli->query($sql);
+		print_r($mysqli->error);
+	}
+
+    echo '<table cellpadding="6" border="1">';
     echo "<tr>";
     echo "<th>Personnummer</th>";
     echo "<th>Förnamn</th>";
     echo "<th>Efternamn</th>";
     echo "<th>Epostadress</th>";
     echo "</tr>";
-    while($myRow = mysqli_fetch_array($result)){
-      echo "<tr>";
-      echo "<td>" . $myRow['p_number'] . echo "</td>";
-      echo "<td>" . $myRow['p_firstname'] . echo "</td>";
-      echo "<td>" . $myRow['p_lastname'] . echo "</td>";
-      echo "<td>" . $myRow['p_email'] . echo "</td>";
+
+    while($myRow = $result->fetch_array()){
+    	echo "<tr>";
+      echo "<td>" . $myRow['p_number'] . "</td>";
+      echo "<td>" . $myRow['p_firstname'] . "</td>";
+      echo "<td>" . $myRow['p_lastname'] . "</td>";
+      echo "<td>" . $myRow['p_email'] . "</td>";
       echo "</tr>";
     }
-    echo "</table>"
-  }
-  mysqli_close($dbconnect);
-}
-
-dbConnect();
+    echo "</table>";
 
 ?>
 
