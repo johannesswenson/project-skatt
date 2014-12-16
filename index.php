@@ -12,7 +12,7 @@
     $sql = "SELECT * FROM PATIENT ";
 
 	if($mysqli = connect_db()) {
-	 	
+
 		$result = $mysqli->query($sql);
 		print_r($mysqli->error);
 	}
@@ -36,7 +36,6 @@
     echo "</table>";
 
 ?>
-
   </p>
   <p>Here be dragons</p>
 </body>
