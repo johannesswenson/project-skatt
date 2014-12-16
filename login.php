@@ -4,6 +4,7 @@
 <html xmnlns="http://www.w3.org/1999/xhtml" xml:lang="sv" lang="sv">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="style.css">
     <title>Webbskattningsportalen</title>
     <body></body>
 </html>
