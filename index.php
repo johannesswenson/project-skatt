@@ -38,6 +38,7 @@
 ?>
 
   </p>
+  <p>Here be dragons</p>
 </body>
 <footer>
   <p>Powered by Aguel and friends</p>
