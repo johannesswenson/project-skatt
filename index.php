@@ -1,8 +1,14 @@
-<?php include("db_connection.php") ?>
-<html>
+<?php
+    include("db_connection.php")
+?>
+
+<!DOCTYPE html PUBLIC "-//w3c//DTD XHTMLm 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmnlns="http://www.w3.org/1999/xhtml" xml:lang="sv" lang="sv">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Intro Test Screen</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Webbskattningsportalen</title>
 </head>
 <body>
   <h2>Heading!</h2>
