@@ -38,7 +38,7 @@
 
                      // Skicka till TEMPLOGIN
                      $patientToSendTo = $_POST['patient_number'];
-                     $sqlTemp  = "INSERT INTO TEMPLOGIN (p_number, p_pass) VALUES ('$patientToSendTo', 'random');";
+                     $sqlTemp  = "INSERT INTO TEMPLOGIN (p_number) VALUES ('$patientToSendTo');";
                      $mysqli->query($sqlTemp);
 
                   }
