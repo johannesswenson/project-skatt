@@ -10,8 +10,66 @@
          <h2>Heading!</h2>
             <p>
                <?php
+               if (isset($_POST['send'])) {
+                  $formToSend = $_POST['form'];
+                  if(empty($formToSend)) {
+                     echo "Du valde inga formulär att skicka med i skattningen!";
+                  }
+                  else {
 
-               $sql = "SELECT * FROM PATIENT ";
+                     // Skicka till SKATTNING
+                     $n = count($formToSend);
+                     if ($mysqli = connect_db()) {
+                        $result = $mysqli->query($sqlSend);
+                        print_r($mysqli->error);
+                     }
+                     for ($i=0; $i < $n; $i++) {
+                        $sqlSkattning = "INSERT INTO SKATTNING (f_key) VALUES ('$formToSend[$i]');";
+                        $mysqli->query($sqlSkattning);
+                     }
+                     echo $n . " rows inserted to database! <br />";
+
+                     // Skicka till TEMPLOGIN
+                     $patientToSendTo = $_POST['patient_number'];
+                     $sqlTemp  = "INSERT INTO TEMPLOGIN (p_number, p_pass) VALUES ('$patientToSendTo', 'random');";
+                     $mysqli->query($sqlTemp);
+
+                  }
+
+
+               }
+               else { ?>
+                  <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                  <label for="patient_number">Personnummer: </label>
+                  <input name="patient_number" type="text"> <br />
+                  <label for="patient_firstname">Förnamn: </label>
+                  <input name="patient_firstname" type="text"> <br />
+                  <label for="patient_lastname">Efternamn: </label>
+                  <input name="patient_lastname" type="text"> <br />
+                  <label for="patient_email">Epostadress: </label>
+                  <input name="patient_email" type="text"> <br /><br />
+                  <?php
+                     $sqlForms = "SELECT f_key, f_code, f_name FROM FORM;";
+
+                     if ($mysqli = connect_db()) {
+                        $result = $mysqli->query($sqlForms);
+                        print_r($mysqli->error);
+                     }
+
+                     while($myRow = $result->fetch_array()) {
+                        echo '<input name="form[ ]" type="checkbox" value="' . $myRow['f_key'] . '">';
+                        echo $myRow['f_code'] . '/ ' . $myRow['f_name'] . '<br />';
+                     }
+
+                  ?>
+                  <br />
+                  <input name="send" type="submit" value="Skicka skattning">
+               </form>
+               <?php } ?>
+
+               <?php
+
+               $sql = 'SELECT * FROM PATIENT ';
 
 	            if($mysqli = connect_db()) {
 
@@ -20,22 +78,22 @@
 	            }
 
                echo '<table cellpadding="6" border="1">';
-               echo "<tr>";
-               echo "<th>Personnummer</th>";
-               echo "<th>Förnamn</th>";
-               echo "<th>Efternamn</th>";
-               echo "<th>Epostadress</th>";
-               echo "</tr>";
+               echo '<tr>';
+               echo '<th>Personnummer</th>';
+               echo '<th>Förnamn</th>';
+               echo '<th>Efternamn</th>';
+               echo '<th>Epostadress</th>';
+               echo '</tr>';
 
                while($myRow = $result->fetch_array()){
-    	             echo "<tr>";
-                   echo "<td>" . $myRow['p_number'] . "</td>";
-                   echo "<td>" . $myRow['p_firstname'] . "</td>";
-                   echo "<td>" . $myRow['p_lastname'] . "</td>";
-                   echo "<td>" . $myRow['p_email'] . "</td>";
-                   echo "</tr>";
+    	             echo '<tr>';
+                   echo '<td>' . $myRow['p_number'] . '</td>';
+                   echo '<td>' . $myRow['p_firstname'] . '</td>';
+                   echo '<td>' . $myRow['p_lastname'] . '</td>';
+                   echo '<td>' . $myRow['p_email'] . '</td>';
+                   echo '</tr>';
                }
-               echo "</table>";
+               echo '</table>';
 
                ?>
             </p>
