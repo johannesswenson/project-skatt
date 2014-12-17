@@ -1,15 +1,75 @@
-body{
-    background:#9FC8E8;
+#main {
+    width:960px;
+    margin:50px auto;
 }
 
-table{
-    color:#2b2828;
+span {
+    color:red
 }
 
-p{
-    color:#2b2828;
+h2 {
+    text-align:center;
+    border-radius:10px 10px 0 0;
+    margin:-10px -40px;
+    padding:15px
 }
 
-h2{
-    color:red;
+hr {
+    border:0;
+    border-bottom:1px solid #ccc;
+    margin:10px -40px;
+    margin-bottom:30px
+}
+
+.container {
+    width:50%;
+    margin:auto;
+    border-radius:10px;
+    border:2px solid #ccc;
+    padding:10px 40px 25px;
+    margin-top:70px
+}
+
+input[type=text],
+input[type=password] {
+    width:99.5%;
+    padding:10px;
+    margin-top:8px;
+    border:1px solid #ccc;
+    padding-left:5px;
+    font-size:16px;
+}
+
+input[type=submit] {
+    width:100%;
+    background-color:#6696CF;
+    color:#fff;
+    border:2px solid #95B9E4;
+    padding:10px;
+    font-size:20px;
+    cursor:pointer;
+    border-radius:5px;
+    margin-bottom:15px
+}
+
+#profile {
+    padding:50px;
+    border:1px dashed grey;
+    font-size:20px;
+    background-color:#DCE6F7
+}
+
+#logout {
+    float:right;
+    padding:5px;
+    border:dashed 1px gray
+}
+
+a {
+    text-decoration:none;
+    color:#6495ed
+}
+
+i {
+    color:#6495ed
 }
