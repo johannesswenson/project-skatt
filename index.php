@@ -19,61 +19,55 @@ require('functions.php');
          <h2>Heading!</h2>
             <p>
                <?php
-               if (isset($_POST['send'])) {
-                  $formToSend = $_POST['form'];
+               if (isset($_POST['generate'])) {
+
+                  // Definiera sessions-variabler
+                     $formToSend = $_POST['form'];
+                     $_SESSION['form'] = $formToSend;
+
+                     $patientToSendTo = $_POST['patient_number'];
+                     $_SESSION['patient_number'] = $patientToSendTo;
+
+                  // Om knapp är tryckt
+                  // ...och minst ett formulär valt
                   if(empty($formToSend)) {
                      echo "Du valde inga formulär att skicka med i skattningen!";
                   }
-                  else {
 
+                  // Om minst ett formulär ifyllt...
+                  else {
+                     // SQL Error message
                      if ($mysqli = connect_db()) {
                         $result = $mysqli->query($sqlSend);
                         print_r($mysqli->error);
                      }
                      // Skicka till TEMPLOGIN
-                     $patientToSendTo = $_POST['patient_number'];
+
                      $randPass = randomPassword();
                      $sqlTemp  = "INSERT INTO TEMPLOGIN (p_number, p_pass) VALUES ('$patientToSendTo', '$randPass');";
                      $mysqli->query($sqlTemp);
 
+                     // Hämta t_key
+                     $tKey = getTkey($patientToSendTo);
+
                      // Skicka till SKATTNING
+
+                     // FUNKAR EJ?
+                     // sendToSkattning($formToSend, $tKey);
+
                      $n = count($formToSend);
                      for ($i=0; $i < $n; $i++) {
-                        $sqlSkattning = "INSERT INTO SKATTNING (f_key) VALUES ('$formToSend[$i]');";
+                        $sqlSkattning = "INSERT INTO SKATTNING (f_key, t_key) VALUES ('$formToSend[$i]', '$tKey[0]');";
                         $mysqli->query($sqlSkattning);
                      }
 
                   }
 
                }
-               else { ?>
-                  <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                  <label for="patient_number">Personnummer: </label>
-                  <input name="patient_number" type="text"> <br />
-                  <label for="patient_firstname">Förnamn: </label>
-                  <input name="patient_firstname" type="text"> <br />
-                  <label for="patient_lastname">Efternamn: </label>
-                  <input name="patient_lastname" type="text"> <br />
-                  <label for="patient_email">Epostadress: </label>
-                  <input name="patient_email" type="text"> <br /><br />
-                  <?php
-                     $sqlForms = "SELECT f_key, f_code, f_name FROM FORM;";
-
-                     if ($mysqli = connect_db()) {
-                        $result = $mysqli->query($sqlForms);
-                        print_r($mysqli->error);
-                     }
-
-                     while($myRow = $result->fetch_array()) {
-                        echo '<input name="form[ ]" type="checkbox" value="' . $myRow['f_key'] . '">';
-                        echo $myRow['f_code'] . ' / ' . $myRow['f_name'] . '<br />';
-                     }
-
-                  ?>
-                  <br />
-                  <input name="send" type="submit" value="Skicka skattning">
-               </form>
-               <?php } ?>
+               else {
+                  session_start();
+                  firstForm();
+               } ?>
 
                <?php
 
