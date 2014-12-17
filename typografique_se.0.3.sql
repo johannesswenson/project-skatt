@@ -1,26 +1,18 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.8.1
+-- version 4.1.9
 -- http://www.phpmyadmin.net
 --
--- Host: 10.246.17.23:3306
--- Generation Time: Dec 15, 2014 at 07:44 PM
--- Server version: 5.5.40-MariaDB-1~wheezy
--- PHP Version: 5.3.3-7+squeeze15
+-- Host: localhost:8889
+-- Generation Time: Dec 17, 2014 at 10:47 AM
+-- Server version: 5.5.34
+-- PHP Version: 5.5.10
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+01:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
 --
 -- Database: `typografique_se`
 --
-CREATE DATABASE `typografique_se` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `typografique_se`;
 
 -- --------------------------------------------------------
 
@@ -28,7 +20,7 @@ USE `typografique_se`;
 -- Table structure for table `ALT`
 --
 
-CREATE TABLE IF NOT EXISTS `ALT` (
+CREATE TABLE `ALT` (
   `alt_key` int(11) NOT NULL AUTO_INCREMENT,
   `q_key` int(11) NOT NULL COMMENT 'Foreign key',
   `alt_value` int(11) NOT NULL,
@@ -169,7 +161,7 @@ INSERT INTO `ALT` (`alt_key`, `q_key`, `alt_value`, `alt_string`) VALUES
 -- Table structure for table `ANSWER`
 --
 
-CREATE TABLE IF NOT EXISTS `ANSWER` (
+CREATE TABLE `ANSWER` (
   `ans_key` int(11) NOT NULL AUTO_INCREMENT,
   `alt_key` int(11) NOT NULL COMMENT 'Foreign key',
   `s_key` int(11) NOT NULL COMMENT 'Foreign key',
@@ -182,7 +174,7 @@ CREATE TABLE IF NOT EXISTS `ANSWER` (
 -- Table structure for table `FORM`
 --
 
-CREATE TABLE IF NOT EXISTS `FORM` (
+CREATE TABLE `FORM` (
   `f_key` int(11) NOT NULL,
   `f_code` varchar(32) NOT NULL,
   `f_name` varchar(64) NOT NULL,
@@ -204,7 +196,7 @@ INSERT INTO `FORM` (`f_key`, `f_code`, `f_name`) VALUES
 -- Table structure for table `PATIENT`
 --
 
-CREATE TABLE IF NOT EXISTS `PATIENT` (
+CREATE TABLE `PATIENT` (
   `p_number` varchar(10) NOT NULL,
   `p_firstname` varchar(32) NOT NULL,
   `p_lastname` varchar(64) NOT NULL,
@@ -225,7 +217,7 @@ INSERT INTO `PATIENT` (`p_number`, `p_firstname`, `p_lastname`, `p_email`) VALUE
 -- Table structure for table `QUESTION`
 --
 
-CREATE TABLE IF NOT EXISTS `QUESTION` (
+CREATE TABLE `QUESTION` (
   `q_key` int(11) NOT NULL AUTO_INCREMENT,
   `f_key` int(11) NOT NULL COMMENT 'Foreign key',
   `q_string` varchar(256) NOT NULL,
@@ -274,7 +266,7 @@ INSERT INTO `QUESTION` (`q_key`, `f_key`, `q_string`) VALUES
 -- Table structure for table `RESULT`
 --
 
-CREATE TABLE IF NOT EXISTS `RESULT` (
+CREATE TABLE `RESULT` (
   `r_key` int(11) NOT NULL AUTO_INCREMENT,
   `s_key` int(11) NOT NULL COMMENT 'Foreign key',
   `str_key` int(11) NOT NULL COMMENT 'Foreign key',
@@ -288,7 +280,7 @@ CREATE TABLE IF NOT EXISTS `RESULT` (
 -- Table structure for table `RESULTSTRING`
 --
 
-CREATE TABLE IF NOT EXISTS `RESULTSTRING` (
+CREATE TABLE `RESULTSTRING` (
   `str_key` int(11) NOT NULL,
   `string` varchar(64) NOT NULL,
   UNIQUE KEY `str_key` (`str_key`)
@@ -300,15 +292,15 @@ CREATE TABLE IF NOT EXISTS `RESULTSTRING` (
 -- Table structure for table `SKATTNING`
 --
 
-CREATE TABLE IF NOT EXISTS `SKATTNING` (
+CREATE TABLE `SKATTNING` (
   `s_key` int(11) NOT NULL AUTO_INCREMENT,
-  `v_number` int(10) NOT NULL COMMENT 'Foreign key',
+  `v_number` varchar(10) NOT NULL COMMENT 'Foreign key',
   `f_key` int(11) NOT NULL COMMENT 'Foreign key',
   `t_key` int(11) NOT NULL COMMENT 'Foreign key',
   `date` date NOT NULL,
   `time` time NOT NULL,
   UNIQUE KEY `s_key` (`s_key`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=36 ;
 
 -- --------------------------------------------------------
 
@@ -316,12 +308,12 @@ CREATE TABLE IF NOT EXISTS `SKATTNING` (
 -- Table structure for table `TEMPLOGIN`
 --
 
-CREATE TABLE IF NOT EXISTS `TEMPLOGIN` (
+CREATE TABLE `TEMPLOGIN` (
   `t_key` int(11) NOT NULL AUTO_INCREMENT,
-  `p_number` int(10) NOT NULL COMMENT 'Foreign key',
-  `p_pass` int(11) NOT NULL,
+  `p_number` varchar(10) NOT NULL COMMENT 'Foreign key',
+  `p_pass` varchar(6) NOT NULL,
   UNIQUE KEY `t_key` (`t_key`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=44 ;
 
 -- --------------------------------------------------------
 
@@ -329,7 +321,7 @@ CREATE TABLE IF NOT EXISTS `TEMPLOGIN` (
 -- Table structure for table `VARDARE`
 --
 
-CREATE TABLE IF NOT EXISTS `VARDARE` (
+CREATE TABLE `VARDARE` (
   `v_number` varchar(10) NOT NULL,
   `v_pass` varchar(32) NOT NULL,
   `v_email` varchar(64) NOT NULL,
@@ -342,7 +334,3 @@ CREATE TABLE IF NOT EXISTS `VARDARE` (
 
 INSERT INTO `VARDARE` (`v_number`, `v_pass`, `v_email`) VALUES
 ('9107040000', '123456', 'axel.json@gmail.com');
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
