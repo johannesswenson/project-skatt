@@ -47,7 +47,7 @@ require('functions.php');
 
                }
                else { ?>
-                  <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                  <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="float-left">
                   <label for="patient_number">Personnummer: </label>
                   <input name="patient_number" type="text"> <br />
                   <label for="patient_firstname">Förnamn: </label>
@@ -56,6 +56,11 @@ require('functions.php');
                   <input name="patient_lastname" type="text"> <br />
                   <label for="patient_email">Epostadress: </label>
                   <input name="patient_email" type="text"> <br /><br />
+                </form>
+                <form class="float-right">
+                    <label>Skattningar:</label>
+                    <br />
+
                   <?php
                      $sqlForms = "SELECT f_key, f_code, f_name FROM FORM;";
 

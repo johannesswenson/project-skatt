@@ -7,7 +7,7 @@ span {
     color:red
 }
 
-h2 {
+h1, h2 {
     text-align:center;
     border-radius:10px 10px 0 0;
     margin:-10px -40px;
@@ -26,7 +26,7 @@ hr {
     margin:auto;
     border-radius:10px;
     border:2px solid #ccc;
-    padding:10px 40px 25px;
+    padding:10px 35px 25px;
     margin-top:70px
 }
 
@@ -50,6 +50,20 @@ input[type=submit] {
     cursor:pointer;
     border-radius:5px;
     margin-bottom:15px
+}
+
+form{
+    padding: 10px;
+    margin:auto;
+    width: 45%;
+}
+
+.float-right{
+    float:right;
+}
+
+.float-left{
+    float:left;
 }
 
 #profile {
