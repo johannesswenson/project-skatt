@@ -14,7 +14,7 @@ require('functions.php');
     <title>Webbskattningsportalen</title>
 </head>
 <body>
-   <div class="content">
+   <div id="main">
       <div class="container">
          <h2>Heading!</h2>
             <p>
@@ -106,10 +106,10 @@ require('functions.php');
                ?>
             </p>
          </div>
-      </div>
-</body>
-<footer>
-  <p>Powered by Aguel and friends</p>
-  <p>hur funkar commits?</p>
-  <p>Foot</p>
-</footer>
+     </div>
+    </body>
+    <footer>
+        <p>Skapad av oss</p>
+    </footer>
+
+</html>
