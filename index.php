@@ -1,4 +1,8 @@
-<?php include("db_connection.php") ?>
+<?php
+include('db_connection.php');
+require('functions.php');
+
+?>
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -17,25 +21,28 @@
                   }
                   else {
 
-                     // Skicka till SKATTNING
-                     $n = count($formToSend);
+
+
+
                      if ($mysqli = connect_db()) {
                         $result = $mysqli->query($sqlSend);
                         print_r($mysqli->error);
                      }
+                     // Skicka till TEMPLOGIN
+                     $patientToSendTo = $_POST['patient_number'];
+                     $randPass = randomPassword();
+                     $sqlTemp  = "INSERT INTO TEMPLOGIN (p_number, p_pass) VALUES ('$patientToSendTo', '$randPass');";
+                     $mysqli->query($sqlTemp);
+
+                     // Skicka till SKATTNING
+                     $n = count($formToSend);
                      for ($i=0; $i < $n; $i++) {
                         $sqlSkattning = "INSERT INTO SKATTNING (f_key) VALUES ('$formToSend[$i]');";
                         $mysqli->query($sqlSkattning);
                      }
-                     echo $n . " rows inserted to database! <br />";
 
-                     // Skicka till TEMPLOGIN
-                     $patientToSendTo = $_POST['patient_number'];
-                     $sqlTemp  = "INSERT INTO TEMPLOGIN (p_number, p_pass) VALUES ('$patientToSendTo', 'random');";
-                     $mysqli->query($sqlTemp);
 
-                  }
-
+                     }
 
                }
                else { ?>
@@ -58,7 +65,7 @@
 
                      while($myRow = $result->fetch_array()) {
                         echo '<input name="form[ ]" type="checkbox" value="' . $myRow['f_key'] . '">';
-                        echo $myRow['f_code'] . '/ ' . $myRow['f_name'] . '<br />';
+                        echo $myRow['f_code'] . ' / ' . $myRow['f_name'] . '<br />';
                      }
 
                   ?>
