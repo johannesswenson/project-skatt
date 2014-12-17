@@ -48,7 +48,7 @@ function sqlSkattning() {
    }
 }
 // -----   ------
-function getDataTempLogin($p_n) {
+function getTkey($p_n) {
    $sqlGetDataTempLogin = "SELECT t_key FROM TEMPLOGIN WHERE p_number = '$p_n';";
 
    if ($mysqli = connect_db()) {
@@ -61,7 +61,11 @@ function getDataTempLogin($p_n) {
 }
 
 // -----   ------
-function printToSkattning() {
-
+function sendToSkattning($formToSend, $tKey) {
+   $n = count($formToSend);
+   for ($i=0; $i < $n; $i++) {
+      $sqlSkattning = "INSERT INTO SKATTNING (f_key, t_key) VALUES ('$formToSend[$i]', '$tKey[0]');";
+      $mysqli->query($sqlSkattning);
+   }
 }
 ?>

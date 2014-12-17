@@ -21,13 +21,20 @@ require('functions.php');
                <?php
                if (isset($_POST['generate'])) {
 
-                  $formToSend = $_POST['form'];
-                  $_SESSION['form'] = $formToSend;
+                  // Definiera sessions-variabler
+                     $formToSend = $_POST['form'];
+                     $_SESSION['form'] = $formToSend;
 
+                     $patientToSendTo = $_POST['patient_number'];
+                     $_SESSION['patient_number'] = $patientToSendTo;
+
+                  // Om knapp är tryckt
+                  // ...och minst ett formulär valt
                   if(empty($formToSend)) {
                      echo "Du valde inga formulär att skicka med i skattningen!";
                   }
 
+                  // Om minst ett formulär ifyllt...
                   else {
                      // SQL Error message
                      if ($mysqli = connect_db()) {
@@ -35,19 +42,22 @@ require('functions.php');
                         print_r($mysqli->error);
                      }
                      // Skicka till TEMPLOGIN
-                     $patientToSendTo = $_POST['patient_number'];
-                     $_SESSION['patient_number'] = $patientToSendTo;
+
                      $randPass = randomPassword();
                      $sqlTemp  = "INSERT INTO TEMPLOGIN (p_number, p_pass) VALUES ('$patientToSendTo', '$randPass');";
                      $mysqli->query($sqlTemp);
 
                      // Hämta t_key
-                     $data = getDataTempLogin($patientToSendTo);
+                     $tKey = getTkey($patientToSendTo);
 
                      // Skicka till SKATTNING
+
+                     // FUNKAR EJ?
+                     // sendToSkattning($formToSend, $tKey);
+
                      $n = count($formToSend);
                      for ($i=0; $i < $n; $i++) {
-                        $sqlSkattning = "INSERT INTO SKATTNING (f_key, t_key) VALUES ('$formToSend[$i]', '$data[0]');";
+                        $sqlSkattning = "INSERT INTO SKATTNING (f_key, t_key) VALUES ('$formToSend[$i]', '$tKey[0]');";
                         $mysqli->query($sqlSkattning);
                      }
 
