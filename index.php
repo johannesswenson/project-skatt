@@ -1,11 +1,13 @@
 <?php
-    include("db_connection.php")
+include('db_connection.php');
+require('functions.php');
 ?>
 
 <!DOCTYPE html PUBLIC "-//w3c//DTD XHTMLm 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmnlns="http://www.w3.org/1999/xhtml" xml:lang="sv" lang="sv">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="style.css" />
@@ -24,25 +26,24 @@
                   }
                   else {
 
-                     // Skicka till SKATTNING
-                     $n = count($formToSend);
                      if ($mysqli = connect_db()) {
                         $result = $mysqli->query($sqlSend);
                         print_r($mysqli->error);
                      }
+                     // Skicka till TEMPLOGIN
+                     $patientToSendTo = $_POST['patient_number'];
+                     $randPass = randomPassword();
+                     $sqlTemp  = "INSERT INTO TEMPLOGIN (p_number, p_pass) VALUES ('$patientToSendTo', '$randPass');";
+                     $mysqli->query($sqlTemp);
+
+                     // Skicka till SKATTNING
+                     $n = count($formToSend);
                      for ($i=0; $i < $n; $i++) {
                         $sqlSkattning = "INSERT INTO SKATTNING (f_key) VALUES ('$formToSend[$i]');";
                         $mysqli->query($sqlSkattning);
                      }
-                     echo $n . " rows inserted to database! <br />";
-
-                     // Skicka till TEMPLOGIN
-                     $patientToSendTo = $_POST['patient_number'];
-                     $sqlTemp  = "INSERT INTO TEMPLOGIN (p_number) VALUES ('$patientToSendTo');";
-                     $mysqli->query($sqlTemp);
 
                   }
-
 
                }
                else { ?>
@@ -65,7 +66,7 @@
 
                      while($myRow = $result->fetch_array()) {
                         echo '<input name="form[ ]" type="checkbox" value="' . $myRow['f_key'] . '">';
-                        echo $myRow['f_code'] . '/ ' . $myRow['f_name'] . '<br />';
+                        echo $myRow['f_code'] . ' / ' . $myRow['f_name'] . '<br />';
                      }
 
                   ?>
