@@ -1,12 +1,17 @@
 <?php
 include('db_connection.php');
 require('functions.php');
-
 ?>
-<html>
+
+<!DOCTYPE html PUBLIC "-//w3c//DTD XHTMLm 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmnlns="http://www.w3.org/1999/xhtml" xml:lang="sv" lang="sv">
+
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Intro Test Screen</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Webbskattningsportalen</title>
 </head>
 <body>
    <div class="content">
@@ -20,9 +25,6 @@ require('functions.php');
                      echo "Du valde inga formulär att skicka med i skattningen!";
                   }
                   else {
-
-
-
 
                      if ($mysqli = connect_db()) {
                         $result = $mysqli->query($sqlSend);
@@ -41,8 +43,7 @@ require('functions.php');
                         $mysqli->query($sqlSkattning);
                      }
 
-
-                     }
+                  }
 
                }
                else { ?>
