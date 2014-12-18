@@ -38,18 +38,9 @@ function firstForm() {
    echo '<input name="generate" type="submit" value="Skicka skattning">';
    echo '</form>';
 }
-
-// ----- SQL for sending to SKATTNING -----
-function sqlSkattning() {
-   $n = count($formsToSend);
-   for ($i=0; $i < $n; $i++) {
-      $sqlSkattning = "INSERT INTO SKATTNING (f_key) VALUES ('$formsToSend[$i]');";
-      $mysqli->query($sqlSkattning);
-   }
-}
-// -----   ------
+// ----- Get t_key ------
 function getTkey($p_n) {
-   $sqlGetDataTempLogin = "SELECT t_key FROM TEMPLOGIN WHERE p_number = '$p_n';";
+   $sqlGetDataTempLogin = "SELECT t_key FROM TEMPLOGIN WHERE (p_number = '$p_n') ORDER BY t_timestamp DESC LIMIT 1;";
 
    if ($mysqli = connect_db()) {
       $result = $mysqli->query($sqlGetDataTempLogin);
@@ -60,12 +51,22 @@ function getTkey($p_n) {
    $mysqli->close();
 }
 
-// -----   ------
-function sendToSkattning($formToSend, $tKey) {
-   $n = count($formToSend);
-   for ($i=0; $i < $n; $i++) {
-      $sqlSkattning = "INSERT INTO SKATTNING (f_key, t_key) VALUES ('$formToSend[$i]', '$tKey[0]');";
-      $mysqli->query($sqlSkattning);
+// ----- getEmailPass function -----
+function getEmailPass($temploginKey) {
+   $sqlGetEmail = "SELECT PATIENT.p_email, TEMPLOGIN.p_pass FROM PATIENT INNER JOIN TEMPLOGIN INNER JOIN SKATTNING ON PATIENT.p_number = TEMPLOGIN.p_number AND TEMPLOGIN.t_timestamp = SKATTNING.s_timestamp WHERE TEMPLOGIN.t_key = '$temploginKey' LIMIT 1;";
+   if ($mysqli = connect_db()) {
+      $result = $mysqli->query($sqlGetEmail);
+      print_r($mysqli->error);
    }
+   $data = $result->fetch_array(MYSQLI_NUM);
+   return $data;
+   $mysqli->close();
+}
+
+// ----- sendEmail function -----
+function sendEmail($patientEmail, $patientPass) {
+   $msg = 'Hej! Här kommer din webbskattning. Klicka på länken nedan för att logga in med ditt personnummer och koden: ' . $patientPass;
+   mail($patientEmail, 'Webbskattning', $msg);
+   echo 'Email sent to ' . $patientEmail;
 }
 ?>
