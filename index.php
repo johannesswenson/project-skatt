@@ -106,12 +106,10 @@ require('functions.php');
 
                ?>
             </p>
-            <p>Here be dragons</p>
          </div>
       </div>
 </body>
-<footer>
-  <p>Powered by Aguel and friends</p>
-  <p>hur funkar commits?</p>
-  <p>Foot</p>
-</footer>
+    <footer>
+        <p>Skapad av oss</p>
+    </footer>
+</html>
