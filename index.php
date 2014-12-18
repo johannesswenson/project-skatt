@@ -59,8 +59,9 @@ require('functions.php');
                      for ($i=0; $i < $n; $i++) {
                         $sqlSkattning = "INSERT INTO SKATTNING (f_key, t_key) VALUES ('$formToSend[$i]', '$tKey[0]');";
                         $mysqli->query($sqlSkattning);
-                        $mysqli->close();
+
                      }
+                     $mysqli->close();
 
                      // Skicka E-post
                      // Hämta adress
