@@ -14,7 +14,7 @@ require('functions.php');
     <title>Webbskattningsportalen</title>
 </head>
 <body>
-   <div class="content">
+   <div class="main">
       <div class="container">
          <h2>Heading!</h2>
             <p>
@@ -41,8 +41,8 @@ require('functions.php');
                         $result = $mysqli->query($sqlSend);
                         print_r($mysqli->error);
                      }
-                     // Skicka till TEMPLOGIN
 
+                     // Skicka till TEMPLOGIN
                      $randPass = randomPassword();
                      $sqlTemp  = "INSERT INTO TEMPLOGIN (p_number, p_pass) VALUES ('$patientToSendTo', '$randPass');";
                      $mysqli->query($sqlTemp);
@@ -59,7 +59,16 @@ require('functions.php');
                      for ($i=0; $i < $n; $i++) {
                         $sqlSkattning = "INSERT INTO SKATTNING (f_key, t_key) VALUES ('$formToSend[$i]', '$tKey[0]');";
                         $mysqli->query($sqlSkattning);
+                        $mysqli->close();
                      }
+
+                     // Skicka E-post
+                     // Hämta adress
+                     $array = getEmailPass($tKey[0]);
+                     $patientEmail = $array[0];
+                     $patientPass = $array[1];
+
+                     sendEmail($patientEmail, $patientPass);
 
                   }
 
@@ -67,14 +76,12 @@ require('functions.php');
                else {
                   session_start();
                   firstForm();
-               } ?>
+               }
 
-               <?php
-
+               // Rest of page
                $sql = 'SELECT * FROM PATIENT ';
 
 	            if($mysqli = connect_db()) {
-
                   $result = $mysqli->query($sql);
 		            print_r($mysqli->error);
 	            }
