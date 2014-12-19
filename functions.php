@@ -40,7 +40,7 @@ function firstForm() {
 }
 // ----- Get t_key ------
 function getTkey($p_n) {
-   $sqlGetDataTempLogin = "SELECT t_key FROM TEMPLOGIN WHERE (p_number = '$p_n') ORDER BY t_timestamp DESC LIMIT 1;";
+   $sqlGetDataTempLogin = "SELECT t_key FROM TEMPLOGIN WHERE (p_number = '$p_n') ORDER BY t_key DESC LIMIT 1;";
 
    if ($mysqli = connect_db()) {
       $result = $mysqli->query($sqlGetDataTempLogin);
@@ -53,7 +53,7 @@ function getTkey($p_n) {
 
 // ----- getEmailPass function -----
 function getEmailPass($temploginKey) {
-   $sqlGetEmail = "SELECT PATIENT.p_email, TEMPLOGIN.p_pass FROM PATIENT INNER JOIN TEMPLOGIN INNER JOIN SKATTNING ON PATIENT.p_number = TEMPLOGIN.p_number AND TEMPLOGIN.t_timestamp = SKATTNING.s_timestamp WHERE TEMPLOGIN.t_key = '$temploginKey' LIMIT 1;";
+   $sqlGetEmail = "SELECT PATIENT.p_email, TEMPLOGIN.p_pass FROM PATIENT INNER JOIN TEMPLOGIN INNER JOIN SKATTNING ON PATIENT.p_number = TEMPLOGIN.p_number AND TEMPLOGIN.t_key = SKATTNING.t_key WHERE TEMPLOGIN.t_key = '$temploginKey' LIMIT 1;";
    if ($mysqli = connect_db()) {
       $result = $mysqli->query($sqlGetEmail);
       print_r($mysqli->error);
@@ -68,5 +68,17 @@ function sendEmail($patientEmail, $patientPass) {
    $msg = 'Hej! Här kommer din webbskattning. Klicka på länken nedan för att logga in med ditt personnummer och koden: ' . $patientPass;
    mail($patientEmail, 'Webbskattning', $msg);
    echo 'Email sent to ' . $patientEmail;
+}
+
+// ----- getLogin -----
+function getLogin($p_number, $p_pass) {
+   $sqlGetLogin = "SELECT p_number, p_pass FROM TEMPLOGIN WHERE p_number = '$p_number' AND p_pass = '$p_pass' LIMIT 1;";
+   if ($mysqli = connect_db()) {
+      $result = $mysqli->query($sqlGetLogin);
+      print_r($mysqli->error);
+   }
+   $data = $result->fetch_array(MYSQLI_NUM);
+   return $data;
+   $mysqli->close();
 }
 ?>
