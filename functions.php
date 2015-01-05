@@ -81,4 +81,26 @@ function getLogin($p_number, $p_pass) {
    return $data;
    $mysqli->close();
 }
+
+// ----- Hämta formulär -----
+function getForm($pNumber) {
+   $sqlGetForm  = "SELECT SKATTNING.f_key, FORM.f_name FROM SKATTNING INNER JOIN TEMPLOGIN INNER JOIN FORM ON SKATTNING.t_key = TEMPLOGIN.t_key AND SKATTNING.f_key = FORM.f_key WHERE TEMPLOGIN.p_number = '$pNumber';";
+
+   // SQL Error message
+   if ($mysqli = connect_db()) {
+      $result = $mysqli->query($sqlGetForm);
+      print_r($mysqli->error);
+   }
+   while($myRow = $result->fetch_array()) {
+      $formKeys[] = $myRow['f_key'];
+      $formNames[] = $myRow['f_name'];
+   }
+   // Skriv ut de skattningsformulär som patienten ska genomföra
+   $n = count($formKeys);
+   for ($i=0; $i < $n; $i++) {
+      echo $formKeys[$i] . ' ' . $formNames[$i] . '<br />';
+   }
+}
+
+
 ?>
