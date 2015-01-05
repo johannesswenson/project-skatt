@@ -15,12 +15,13 @@ require('functions.php');
             <h1>Skattning Login Session</h1>
             <div class="container">
                 <h2>Login Form</h2>
-                <form action="" method="post">
+                <form name="form1" method="post" action="checklogin.php">
                     <label>UserName :</label>
                     <input id="name" name="username" placeholder="username" type="text">
                     <label>Password :</label>
                     <input id="password" name="password" placeholder="**********" type="password">
-                    <input name="submit" type="submit" value=" Login ">
+                    <input name="submit" type="submit" value="Login">
+
                     <span><?php echo $error; ?></span>
                 </form>
             </div>
