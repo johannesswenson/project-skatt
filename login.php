@@ -21,7 +21,6 @@ require('functions.php');
                     <label>Password :</label>
                     <input id="password" name="password" placeholder="**********" type="password">
                     <input name="submit" type="submit" value="Login">
-
                     <span><?php echo $error; ?></span>
                 </form>
             </div>
